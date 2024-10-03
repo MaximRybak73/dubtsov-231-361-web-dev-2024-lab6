@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="description" content="Это пробный сайт" />
+    <link href="style.css " rel="stylesheet" type="text/css" />
+    <link href="images/icon.webp" rel="shortcut icon" type="image/x-icon" />
+    <link href="https://fonts.googleapis.com/css?family=Macondo:regular" rel="stylesheet" />
+    <title>RybolovClub73</title>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <nav class="nav">
+                <div class="text">RybolovClub73</div>
+                <ul>
+                    <li><a href="index.php">Главная</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <h2>Результаты лабораторной работы №6</h2><br>
+
+    <label for="pow-base">Основание (x):</label>
+    <input type="number" id="pow-base">
+    <label for="pow-exponent">Показатель степени (n):</label>
+    <input type="number" id="pow-exponent">
+    <div id="pow-result" class="result"></div>
+
+    <label for="gcd_a">Первое число (a):</label>
+    <input type="number" id="gcd_a">
+    <label for="gcd_b">Второе число (b):</label>
+    <input type="number" id="gcd_b">
+    <div id="gcd-result" class="result"></div>
+
+    <label for="min-digit">Число для поиска минимальной цифры:</label>
+    <input type="number" id="min-digit">
+    <div id="minDigit-result" class="result"></div>
+
+    <label for="pluralize-number">Число записей (n):</label>
+    <input type="number" id="pluralize-number">
+    <div id="pluralize-result" class="result"></div>
+
+    <label for="fibb-n">Число для Фибоначчи (n):</label>
+    <input type="number" id="fibb-n">
+    <div id="fibb-result" class="result"></div>
+
+    <button onclick=calculateResults()>Выполнить расчеты</button>
+
+    <script>
+        function pow(x, n) {
+            let res = 1;
+            for (let i = 0; i < n; i++) {
+                res *= x;
+            }
+            return res;
+        }
+
+        function gcd(a, b) {
+            while (b !== 0) {
+                let perem = b;
+                b = a % b;
+                a = perem;
+            }
+            return a;
+        }
+
+        function minDigit(x) {
+            let min = 9; // максимальная возможная цифра
+            while (x > 0) {
+                let digit = x % 10; // получаем последнюю цифру
+                if (digit < min) {
+                    min = digit; // обновляем минимальную цифру
+                }
+                x = Math.floor(x / 10); // убираем последнюю цифру
+            }
+            return min;
+        }
+
+        function fibb(n) {
+            if (n === 0)
+                return 0;
+            if (n === 1) return 1;
+
+            let a = 0;
+            let b = 1;
+            for (let i = 2; i <= n; i++) {
+                let temp = a + b;
+                a = b;
+                b = temp;
+            }
+            return b;
+        }
+
+        function pluralizeRecords(n) {
+            let word;
+            if (n % 10 == 1 && n % 100 != 11) {
+                word = 'запись';
+            } else if (n % 10 >= 2 && n % 10 <= 4) {
+                word = 'записи';
+            } else {
+                word = 'записей';
+            }
+            return `В результате выполнения запроса было найдено ${n} ${word}`;
+        }
+
+        function calculateResults() {
+            const x = parseInt(document.getElementById('pow-base').value);
+            const n = parseInt(document.getElementById('pow-exponent').value);
+            const a = parseInt(document.getElementById('gcd_a').value);
+            const b = parseInt(document.getElementById('gcd_b').value);
+            const minNumber = parseInt(document.getElementById('min-digit').value);
+            const recordNumber = parseInt(document.getElementById('pluralize-number').value);
+            const fibNumber = parseInt(document.getElementById('fibb-n').value);
+
+            document.getElementById('pow-result').innerText = `pow(${x}, ${n}) = ${pow(x, n)}`;
+            document.getElementById('gcd-result').innerText = `gcd(${a}, ${b}) = ${gcd(a, b)}`;
+            document.getElementById('minDigit-result').innerText = `minDigit(${minNumber}) = ${minDigit(minNumber)}`;
+            document.getElementById('pluralize-result').innerText = `pluralizeRecords(${recordNumber}) = ${pluralizeRecords(recordNumber)}`;
+            document.getElementById('fibb-result').innerText = `fibb(${fibNumber}) = ${fibb(fibNumber)}`;
+        }
+    </script>
+</body>
+</html>
